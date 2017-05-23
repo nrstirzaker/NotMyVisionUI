@@ -1,0 +1,4 @@
+.history/*
+.vscode/*
+config/config-api*.json
+node_modules/*
