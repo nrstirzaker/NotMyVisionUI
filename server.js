@@ -2,7 +2,6 @@
 
 const Inert = require('inert');
 const Path = require('path');
-const extConfig = require('./config/config.json');
 var Tweet = require("./tweet.js");
 var port = process.env.PORT || 8080; // set our port
 
