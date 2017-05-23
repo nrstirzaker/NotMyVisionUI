@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-mongoose.connect('mongodb://localhost/NotMyVision');
+var appConfig = require('./AppConfig.js');
+mongoose.connect(appConfig.getMongoUrl());
 
 var imageSizeSchema = new Schema({
 
