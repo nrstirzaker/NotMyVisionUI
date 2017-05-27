@@ -5,6 +5,7 @@ const Inert = require('inert');
 const Path = require('path');
 var Tweet = require("./tweet.js");
 var mongoose = require('mongoose');
+var isNumeric = require('isnumeric');
 var port = process.env.PORT || 8080; // set our port
 
 
@@ -45,6 +46,13 @@ server.route({
         var back = req.query.back;// || new Date("01/01/1900");
         var initialPage = !(forward || back);
 
+        if (forward && isNumeric(forward )){
+            forward = parseInt( forward );
+        }
+
+        if (back && isNumeric( back )){
+            back = parseInt( back );
+        }
 
         var tweets = {};
 

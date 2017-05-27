@@ -1,8 +1,8 @@
 var ip = '';
 var pageSize = 16;
-var pageNumber = 1;
-var first = 0;
-var last = pageSize - 1;;
+//var pageNumber = 1;
+var firstItem = 0;
+//var last = pageSize - 1;
 $(document).ready(function () {
 
     addNavButtonCode();
@@ -34,7 +34,7 @@ var addNavButtonCode = function () {
 
     $('#btn-back').click(function () {
         $.ajax({
-            url: "/api/tweets?before=" + first,
+            url: "/api/tweets?back=" + firstItem,
             method: "get",
             success: function (data) {
 
@@ -47,7 +47,7 @@ var addNavButtonCode = function () {
 
     $('#btn-forward').click(function () {
         $.ajax({
-            url: "/api/tweets?after=" + last,
+            url: "/api/tweets?forward=" + firstItem,
             method: "get",
             success: function (data) {
 
@@ -62,13 +62,15 @@ var addNavButtonCode = function () {
 
 var generatePage = function (data) {
 
+    if (data.length === 0) {return}; 
+
     var tweets = JSON.stringify(data);
 
     var rows = [];
     var images = [];
 
-    first = data[0].pageIndex;
-    last  =  data[data.length - 1 ].pageIndex;
+    firstItem = data[0].pageIndex;
+    //last  =  data[data.length - 1 ].pageIndex;
     $.each(data, function (i, item) {
 
 

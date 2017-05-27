@@ -15,6 +15,7 @@
   "dependencies": {
     "hapi": "^16.1.1",
     "inert": "^4.2.0",
+    "isnumeric": "^0.3.2",
     "mongoose": "^4.9.7",
     "path": "^0.12.7"
   }
