@@ -1,8 +1,10 @@
 'use strict';
 
+const pageSize = 16;
 const Inert = require('inert');
 const Path = require('path');
 var Tweet = require("./tweet.js");
+var mongoose = require('mongoose');
 var port = process.env.PORT || 8080; // set our port
 
 
@@ -33,19 +35,28 @@ server.route({
     }
 });
 
-var callback = function (labels) {
-    console.log("callback called");
-    console.log(labels);
-
-}
-
 server.route({
     method: 'GET',
     path: '/api/tweets',
     handler: function (req, reply) {
         console.log("/api/tweets");
 
-        var tweets = Tweet.find({ deletedBy: null }).limit(16);
+        var forward = req.query.forward;// || new Date("01/01/1900");
+        var back = req.query.back;// || new Date("01/01/1900");
+        var initialPage = !(forward || back);
+
+
+        var tweets = {};
+
+        if (initialPage) {
+            tweets = Tweet.find({ deletedBy: null }).sort({pageIndex: 'descending'}).limit(pageSize);
+        } else {
+            if (forward) {
+                tweets = Tweet.find({ 'pageIndex': { $gt: forward - pageSize }, deletedBy: null }).sort({createdAt: 'descending'}).limit(pageSize);
+            } else {
+                tweets = Tweet.find({ 'pageIndex': { $gt: back + pageSize }, deletedBy: null }).sort({createdAt: 'descending'}).limit(pageSize);
+            }
+        }
 
         reply(tweets);
     }
@@ -55,12 +66,12 @@ server.route({
     method: 'DELETE',
     path: '/api/tweet',
     handler: function (req, reply) {
-        console.log("/api/tweet:DELETE");
+
 
         Tweet.findOne({ 'tweetId': req.payload.tweetId }, function (error, tweet) {
             tweet.deletedBy = req.payload.ip;
             tweet.save(function () {
-                console.log('saved');
+
             });
         });
 
@@ -74,7 +85,6 @@ server.route({
     method: 'GET',
     path: '/api',
     handler: function (req, reply) {
-        console.log("/api");
         var resp = {
             url: '/api',
             status: 20
