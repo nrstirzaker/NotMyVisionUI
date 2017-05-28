@@ -61,10 +61,10 @@ server.route({
         } else {
             if (forward) {
                 var newPos = forward - pageSize;
-                tweets = Tweet.find({ 'pageIndex': { $gt: newPos }, deletedBy: null }).sort({pageIndex: 'descending'}).limit(pageSize);
+                tweets = Tweet.find({ 'pageIndex': { $lt: newPos }, deletedBy: null }).sort({pageIndex: 'descending'}).limit(pageSize);
             } else {
                 var newPos = back + pageSize;
-                tweets = Tweet.find({ 'pageIndex': { $gt: newPos }, deletedBy: null }).sort({pageIndex: 'descending'}).limit(pageSize);
+                tweets = Tweet.find({ 'pageIndex': { $lt: newPos }, deletedBy: null }).sort({pageIndex: 'descending'}).limit(pageSize);
             }
         }
 
