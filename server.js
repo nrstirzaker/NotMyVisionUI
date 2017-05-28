@@ -60,9 +60,11 @@ server.route({
             tweets = Tweet.find({ deletedBy: null }).sort({pageIndex: 'descending'}).limit(pageSize);
         } else {
             if (forward) {
-                tweets = Tweet.find({ 'pageIndex': { $gt: forward - pageSize }, deletedBy: null }).sort({createdAt: 'descending'}).limit(pageSize);
+                var newPos = forward - pageSize;
+                tweets = Tweet.find({ 'pageIndex': { $gt: newPos }, deletedBy: null }).sort({pageIndex: 'descending'}).limit(pageSize);
             } else {
-                tweets = Tweet.find({ 'pageIndex': { $gt: back + pageSize }, deletedBy: null }).sort({createdAt: 'descending'}).limit(pageSize);
+                var newPos = back + pageSize;
+                tweets = Tweet.find({ 'pageIndex': { $gt: newPos }, deletedBy: null }).sort({pageIndex: 'descending'}).limit(pageSize);
             }
         }
 
