@@ -13,9 +13,9 @@ $(document).ready(function () {
 
     var layout = $('#layout');
 
-    const row = '<div class="row">';
-    const columnDiv = '<div class="gallery_product col-md-3 col-sm-4 col-xs-6">';
-    const endDiv = '</div>';
+    var row = '<div class="row">';
+    var columnDiv = '<div class="gallery_product col-md-3 col-sm-4 col-xs-6">';
+    var endDiv = '</div>';
     $.ajax({
         url: "/api/tweets",
         method: "get",

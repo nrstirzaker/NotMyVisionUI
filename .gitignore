@@ -1,6 +1,8 @@
 .history/*
 .vscode/*
 config/*
+dist/*
+gulpfile.js
 node_modules/*
 config.json
 *.txt

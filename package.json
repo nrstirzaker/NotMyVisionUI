@@ -18,5 +18,11 @@
     "isnumeric": "^0.3.2",
     "mongoose": "^4.9.7",
     "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-minify": "^1.0.0",
+    "gulp-uglify": "^3.0.0",
+    "pump": "^1.0.2"
   }
 }
