@@ -7,7 +7,7 @@ $(document).ready(function () {
 
     addNavButtonCode();
 
-    $.getJSON("http://jsonip.com/?callback=?", function (data) {
+    $.getJSON("https://jsonip.com/?callback=?", function (data) {
         ip = data.ip;
     });
 
