@@ -1,0 +1,48 @@
+{
+    "_id": {
+        "$oid": "592bcf28f10c1400045500eb"
+    },
+    "pageIndex": 0,
+    "createdAt": {
+        "$date": "2017-05-29T07:35:04.893Z"
+    },
+    "updatedAt": {
+        "$date": "2017-05-29T07:35:04.893Z"
+    },
+    "id": "1496043304830",
+    "tweetId": "869094723851571200",
+    "senderHandle": "nrstirzaker",
+    "mediaUrl": "http://pbs.twimg.com/media/DA-lCEOXUAA5fpB.jpg",
+    "tweetCreatedAt": {
+        "$date": "2017-05-29T07:35:03.000Z"
+    },
+    "text": "@N0tMyVision https://t.co/pMcZSXxHft",
+    "sizes": [
+        {
+            "_id": {
+                "$oid": "592bcf28f10c1400045500ec"
+            },
+            "small": {
+                "w": 383,
+                "h": 680,
+                "resize": "fit"
+            },
+            "medium": {
+                "w": 675,
+                "h": 1200,
+                "resize": "fit"
+            },
+            "large": {
+                "w": 1152,
+                "h": 2048,
+                "resize": "fit"
+            },
+            "thumb": {
+                "w": 150,
+                "h": 150,
+                "resize": "crop"
+            }
+        }
+    ],
+    "__v": 0
+}

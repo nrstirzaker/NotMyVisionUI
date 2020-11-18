@@ -1,37 +1,61 @@
 .photo-container:hover .overlay {
-  height: 30%;
+    height: 30%;
 }
 
 .overlay {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-color: #000099;
-  overflow: hidden;
-  width: 100%;
-  height: 0;
-  transition: .5s ease;
-  opacity: 0.60;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #000099;
+    overflow: hidden;
+    width: 100%;
+    height: 0;
+    transition: .5s ease;
+    opacity: 0.60;
 }
 
 .glyphicon-fullscreen {
-  position: absolute;
-  top: 20px;
-  left: 40px;
-  font-size: 40px;
-   color: white;
+    position: absolute;
+    top: 20px;
+    left: 40px;
+    font-size: 40px;
+    color: white;
 }
 
 .glyphicon-remove {
-  position: absolute;
-  top: 20px;
-  right: 40px;
-  font-size: 40px;
-   color: white;
+    position: absolute;
+    top: 20px;
+    right: 40px;
+    font-size: 40px;
+    color: white;
 }
 
 .words {
-  font-size: 20px;
-  color: black;
+    font-size: 20px;
+    color: black;
+}
+
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #006990;
+    color: white;
+    text-align: center;
+}
+
+footer a {
+    color: white;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+footer a:hover {
+    color: white
+}
+
+footer a:visited {
+    color: white;
 }

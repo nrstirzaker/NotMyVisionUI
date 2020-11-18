@@ -1,118 +1,82 @@
-'use strict';
-
 const pageSize = 16;
-const Inert = require('inert');
-const Path = require('path');
-var Tweet = require("./tweet.js");
-var mongoose = require('mongoose');
-var isNumeric = require('isnumeric');
-var port = process.env.PORT || 8080; // set our port
+const express = require('express');
+//const Tweet = require("./tweet.js");
+const cors = require('cors');
+const isNumeric = require('isnumeric');
+const port = process.env.PORT || 8080; // set our port
+
+const app = express();
+app.use(cors());
+app.use(express.static('public'))
 
 
+app.get('/api/tweets', (req, res) => {
 
-const Hapi = require('hapi');
-const server = new Hapi.Server({
-    connections: {
-        routes: {
-            files: {
-                relativeTo: Path.join(__dirname, 'public')
-            }
-        }
+    console.log("/api/tweets");
+
+    let forward = req.query.forward;// || new Date("01/01/1900");
+    let back = req.query.back;// || new Date("01/01/1900");
+    const initialPage = !(forward || back);
+
+    if (forward && isNumeric(forward)) {
+        forward = parseInt(forward);
     }
-});
-server.connection({ port: port });
 
-server.register(Inert, () => { });
-
-server.route({
-    method: 'GET',
-    path: '/{param*}',
-    handler: {
-        directory: {
-            path: '.',
-            redirectToSlash: true,
-            index: true
-        }
+    if (back && isNumeric(back)) {
+        back = parseInt(back);
     }
-});
 
-server.route({
-    method: 'GET',
-    path: '/api/tweets',
-    handler: function (req, reply) {
-        console.log("/api/tweets");
+    const tweets = {};
 
-        var forward = req.query.forward;// || new Date("01/01/1900");
-        var back = req.query.back;// || new Date("01/01/1900");
-        var initialPage = !(forward || back);
-
-        if (forward && isNumeric(forward )){
-            forward = parseInt( forward );
-        }
-
-        if (back && isNumeric( back )){
-            back = parseInt( back );
-        }
-
-        var tweets = {};
-
-        if (initialPage) {
-            tweets = Tweet.find({ deletedBy: null }).sort({pageIndex: 'descending'}).limit(pageSize);
+    if (initialPage) {
+        //tweets = Tweet.find({deletedBy: null}).sort({pageIndex: 'descending'}).limit(pageSize);
+    } else {
+        if (forward) {
+            let newPos = forward - pageSize;
+            //tweets = Tweet.find({'pageIndex': {$lt: newPos}, deletedBy: null}).sort({pageIndex: 'descending'}).limit(pageSize);
         } else {
-            if (forward) {
-                var newPos = forward - pageSize;
-                tweets = Tweet.find({ 'pageIndex': { $lt: newPos }, deletedBy: null }).sort({pageIndex: 'descending'}).limit(pageSize);
-            } else {
-                var newPos = back + pageSize;
-                tweets = Tweet.find({ 'pageIndex': { $lt: newPos }, deletedBy: null }).sort({pageIndex: 'descending'}).limit(pageSize);
-            }
+            let newPos = back + pageSize;
+            //tweets = Tweet.find({'pageIndex': {$lt: newPos}, deletedBy: null}).sort({pageIndex: 'descending'}).limit(pageSize);
         }
-
-        reply(tweets);
     }
+
+    return tweets;
+
 });
 
-server.route({
-    method: 'DELETE',
-    path: '/api/tweet',
-    handler: function (req, reply) {
+app.delete('/api/tweet', (req, res) => {
 
 
-        Tweet.findOne({ 'tweetId': req.payload.tweetId }, function (error, tweet) {
-            tweet.deletedBy = req.payload.ip;
-            tweet.save(function () {
+    // Tweet.findOne({'tweetId': req.payload.tweetId}, function (error, tweet) {
+    //     tweet.deletedBy = req.payload.ip;
+    //     tweet.save(function () {
+    //
+    //     });
+    // });
 
-            });
-        });
+    return "success";
 
-        reply("success");
-    }
 });
 
 
+app.get('/api', (req, res) => {
 
-server.route({
-    method: 'GET',
-    path: '/api',
-    handler: function (req, reply) {
-        var resp = {
-            url: '/api',
-            status: 20
-        }
-        reply(resp);
+    const resp = {
+        url: '/api',
+        status: 20
     }
+    return (resp);
+
 });
 
-server.register(
-    {
-        register: require('inert')
-    },
-    function (err) {
-        if (err) throw err
+let server = app.listen(port, () => {
+    console.log('Server running at:', server.address().port);
+})
 
-        server.start(function (err) {
-            console.log('Server started at: ' + server.info.uri)
-        })
-    }
-)
+
+
+
+
+
+
 
